@@ -1,0 +1,328 @@
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> INSERT dog (class_id, name, bday, command) VALUES (1,Bobik,2020-05-19,1), (1,Misha,2019-01-12,2);
+ERROR 1054 (42S22): Unknown column 'Bobik' in 'field list'
+mysql> INSERT dog (class_id, name, bday, command) VALUES (1,"Bobik",2020-05-19,1), (1,"Misha",2019-01-12,2);
+ERROR 1292 (22007): Incorrect date value: '1996' for column 'bday' at row 1
+mysql> INSERT dog (class_id, name, bday, command) VALUES (1,"Bobik","2020-05-19",1), (1,"Misha","2019-01-12",2);
+Query OK, 2 rows affected (0,03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT cat (class_id, name, bday, command) VALUES (2,"Marsik","2021-07-13",4), (2,"Vasya","2016-02-22",3);
+Query OK, 2 rows affected (0,01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT hamster (class_id, name, bday, command) VALUES (1,"Gena","2023-02-11",3), (1,"Homa","2022-06-12",4);
+Query OK, 2 rows affected (0,01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> Select * FROM Cat;
+ERROR 1146 (42S02): Table 'human_friends.Cat' doesn't exist
+mysql> Select * FROM cat;
++----+----------+--------+------------+---------+
+| id | class_id | name   | bday       | command |
++----+----------+--------+------------+---------+
+|  1 |        1 | Marsik | 2021-07-13 |       4 |
+|  2 |        1 | Vasya  | 2016-02-22 |       3 |
++----+----------+--------+------------+---------+
+2 rows in set (0,00 sec)
+
+mysql> Select * FROM dog;
++----+----------+-------+------------+---------+
+| id | class_id | name  | bday       | command |
++----+----------+-------+------------+---------+
+|  1 |        1 | Bobik | 2020-05-19 |       1 |
+|  2 |        1 | Misha | 2019-01-12 |       2 |
++----+----------+-------+------------+---------+
+2 rows in set (0,00 sec)
+
+mysql> Select * FROM hamster;
++----+----------+------+------------+---------+
+| id | class_id | name | bday       | command |
++----+----------+------+------------+---------+
+|  1 |        1 | Gena | 2023-02-11 |       3 |
+|  2 |        1 | Homa | 2022-06-12 |       4 |
++----+----------+------+------------+---------+
+2 rows in set (0,00 sec)
+mysql> INSERT horse (class_id, name, bday, command) VALUES (2,"Varya","2020-09-21",4), (2,"Iskra","2014-03-10",2);
+Query OK, 2 rows affected (0,03 sec)e, bday, command) VALUES (1,"Gena","2023-02-11",3), (1,"Homa","2022-06-12",4);
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> Select * FROM horse;
++----+----------+-------+------------+---------+
+| id | class_id | name  | bday       | command |
++----+----------+-------+------------+---------+
+|  1 |        2 | Varya | 2020-09-21 |       4 |
+|  2 |        2 | Iskra | 2014-03-10 |       2 |
++----+----------+-------+------------+---------+
+2 rows in set (0,00 sec)
+
+mysql> INSERT camel (class_id, name, bday, command) VALUES (2,"Sasha","2018-08-02",2), (2,"Lubava","2017-11-24",1);
+Query OK, 2 rows affected (0,01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT donkey (class_id, name, bday, command) VALUES (2,"Mitka","2016-09-22",2), (2,"Snejka","2013-10-14",4);
+Query OK, 2 rows affected (0,01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> Select * FROM horse;
++----+----------+-------+------------+---------+
+| id | class_id | name  | bday       | command |
++----+----------+-------+------------+---------+
+|  1 |        2 | Varya | 2020-09-21 |       4 |
+|  2 |        2 | Iskra | 2014-03-10 |       2 |
++----+----------+-------+------------+---------+
+2 rows in set (0,00 sec)
+
+mysql> Select * FROM camel;
++----+----------+--------+------------+---------+
+| id | class_id | name   | bday       | command |
++----+----------+--------+------------+---------+
+|  1 |        2 | Sasha  | 2018-08-02 |       2 |
+|  2 |        2 | Lubava | 2017-11-24 |       1 |
++----+----------+--------+------------+---------+
+2 rows in set (0,00 sec)
+
+mysql> Select * FROM donkey;
++----+----------+--------+------------+---------+
+| id | class_id | name   | bday       | command |
++----+----------+--------+------------+---------+
+|  1 |        2 | Mitka  | 2016-09-22 |       2 |
+|  2 |        2 | Snejka | 2013-10-14 |       4 |
++----+----------+--------+------------+---------+
+2 rows in set (0,01 sec)
+
+mysql> Select * FROM pack_animal;
++----+-----------+--------------+
+| id | animal_id | animal_class |
++----+-----------+--------------+
+|  1 |         2 | horse        |
+|  2 |         2 | camel        |
+|  3 |         2 | donkey       |
++----+-----------+--------------+
+3 rows in set (0,00 sec)
+
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`human_friends`.`camel`, CONSTRAINT `camel_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `pack_animal` (`id`))
+mysql> DELETE FROM pack_animal WHERE animal_class = 'camel';
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`human_friends`.`camel`, CONSTRAINT `camel_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `pack_animal` (`id`))
+mysql> Select * FROM pack_animal;
++----+-----------+--------------+
+| id | animal_id | animal_class |
++----+-----------+--------------+
+|  1 |         2 | horse        |
+|  2 |         2 | camel        |
+|  3 |         2 | donkey       |
++----+-----------+--------------+
+3 rows in set (0,00 sec)
+
+mysql> DELETE FROM pack_animal WHERE animal_class = "camel";
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`human_friends`.`camel`, CONSTRAINT `camel_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `pack_animal` (`id`))
+mysql> SET FOREIGN_KEY_CHECKS=0
+    -> ;
+Query OK, 0 rows affected (0,03 sec)
+
+mysql> DELETE FROM pack_animal WHERE animal_class = "camel";
+Query OK, 1 row affected (0,02 sec)
+
+mysql> Select * FROM pack_animal;
++----+-----------+--------------+
+| id | animal_id | animal_class |
++----+-----------+--------------+
+|  1 |         2 | horse        |
+|  3 |         2 | donkey       |
++----+-----------+--------------+
+2 rows in set (0,00 sec)
+
+mysql> SELECT class_id, name,bday, command FROM horse
+    -> UNION
+    -> class_id, name,bday, command FROM donkey;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for themysql> SELECT class_id, name,bday, command FROM horse UNION SELECT class_id, name,bday, command FROM donkey;
++----------+--------+------------+---------+ROM horse UNION class_id, name,bday, command FROM donkey;
+| class_id | name   | bday       | command |
++----------+--------+------------+---------+
+|        2 | Varya  | 2020-09-21 |       4 |
+|        2 | Iskra  | 2014-03-10 |       2 |
+|        2 | Mitka  | 2016-09-22 |       2 |
+|        2 | Snejka | 2013-10-14 |       4 |
++----------+--------+------------+---------+
+4 rows in set (0,21 sec)
+
+mysql> DROP TABLE IF EXITS young_animal;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'EXITS young_animal' at line 1
+mysql> DROP TABLE IF EXISTS young_animal;
+Query OK, 0 rows affected, 1 warning (0,00 sec)
+
+mysql> CREATE TABLE young_animal AS
+    -> SELECT name, CONCAT(TIMESTAMPDIFF(YEAR,bday,CURDATE())," years", MOD(TIMESTAMPDIFF(MONTH,bday,CURDATE()),12)," months") AS age
+    -> FROM dog WHERE TIMESTAMPDIFF(YEAR,bday,CURDATE())>=1 AND TIMESTAMPDIFF(YEAR,bday,CURDATE())<3
+    -> UNION
+    -> SELECT name, CONCAT(TIMESTAMPDIFF(YEAR,bday,CURDATE())," years", MOD(TIMESTAMPDIFF(MONTH,bday,CURDATE()),12)," months") AS age
+    -> FROM cat WHERE TIMESTAMPDIFF(YEAR,bday,CURDATE())>=1 AND TIMESTAMPDIFF(YEAR,bday,CURDATE())<3
+    -> UNION
+    -> SELECT name, CONCAT(TIMESTAMPDIFF(YEAR,bday,CURDATE())," years", MOD(TIMESTAMPDIFF(MONTH,bday,CURDATE()),12)," months") AS age
+    -> FROM hamster WHERE TIMESTAMPDIFF(YEAR,bday,CURDATE())>=1 AND TIMESTAMPDIFF(YEAR,bday,CURDATE())<3
+    -> UNION
+    -> SELECT name, CONCAT(TIMESTAMPDIFF(YEAR,bday,CURDATE())," years", MOD(TIMESTAMPDIFF(MONTH,bday,CURDATE()),12)," months") AS age
+    -> FROM horse WHERE TIMESTAMPDIFF(YEAR,bday,CURDATE())>=1 AND TIMESTAMPDIFF(YEAR,bday,CURDATE())<3 
+    -> UNION
+    -> SELECT name, CONCAT(TIMESTAMPDIFF(YEAR,bday,CURDATE())," years", MOD(TIMESTAMPDIFF(MONTH,bday,CURDATE()),12)," months") AS age
+    -> FROM donkey WHERE TIMESTAMPDIFF(YEAR,bday,CURDATE())>=1 AND TIMESTAMPDIFF(YEAR,bday,CURDATE())<3;
+Query OK, 2 rows affected (0,19 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM young_animal;
++--------+-----------------+
+| name   | age             |
++--------+-----------------+
+| Marsik | 2 years2 months |
+| Homa   | 1 years3 months |
++--------+-----------------+
+2 rows in set (0,00 sec)
+
+mysql> DROP TABLE IF EXISTS all_animals AS
+    -> SELECT c.name,c.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM dog AS d
+    -> LEFT JOIN pet AS hh1 ON c.class_id=hh1.id
+    -> LEFT JOIN command AS cc1 ON c.command=cc1.id
+    -> UNION
+    -> SELECT d.name,d.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM cat AS d;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS
+SELECT c.name,c.bday,hh1.animal_class AS "table_name", cc1.command AS command' at line 1
+mysql> DROP TABLE IF EXISTS all_animals AS
+    -> SELECT d.name,d.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM dog AS d
+    -> LEFT JOIN pet AS hh1 ON d.class_id=hh1.id
+    ->  LEFT JOIN command AS cc1 ON d.command=cc1.id
+    -> UNION
+    -> SELECT c.name,c.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM cat AS c
+    -> LEFT JOIN pet AS hh1 ON c.class_id=hh1.id
+    -> LEFT JOIN command AS cc1 ON c.command=cc1.id
+    -> UNION
+    -> SELECT h.name,h.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM hamster AS h
+    -> LEFT JOIN pet AS hh1 ON h.class_id=hh1.id
+    -> LEFT JOIN command AS cc1 ON h.command=cc1.id
+    -> UNION
+    -> SELECT h.name,h.bday,pp1.animal_class AS "table_name", cc1.command AS command FROM horse AS h
+    -> LEFT JOIN pack_animal AS pp1 ON h.class_id=pp1.id
+    -> LEFT JOIN command AS cc1 ON h.command=cc1.id
+    -> UNION
+    -> SELECT d.name,d.bday,pp1.animal_class AS "table_name", cc1.command AS command FROM donkey AS d
+    -> LEFT JOIN pack_animal AS pp1 ON d.class_id=pp1.id
+    -> LEFT JOIN command AS cc1 ON d.command=cc1.id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AS
+SELECT d.name,d.bday,hh1.animal_class AS "table_name", cc1.command AS command' at line 1
+mysql> CREATE TABLE all_animals AS SELECT d.name,d.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM dog AS d LEFT JOIN
+pet AS hh1                                                                                                                              ", cc1                                                                                                                                   CT h.name,h.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM hamster AS h LEFT JOIN pet AS hh1 ON h.class_id=hh1.id LEFT JOIN comma                                                                                                                             AS h LEFT JOIN pack_animal AS pp1 ON h.class_id=pp1.id LEFT JOIN command AS cc1 ON h.command=cc1.id UNION SELECT d.name,d.bday,pp1.animal_class                                                                                                                                   1 ON d.comma
+Query OK, 10 rows affected (0,06 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM all_animals;
++--------+------------+------------+---------+
+| name   | bday       | table_name | command |
++--------+------------+------------+---------+
+| Bobik  | 2020-05-19 | dog        | play    |
+| Misha  | 2019-01-12 | dog        | eat     |
+| Marsik | 2021-07-13 | dog        | jump    |
+| Vasya  | 2016-02-22 | dog        | sleep   |
+| Gena   | 2023-02-11 | dog        | sleep   |
+| Homa   | 2022-06-12 | dog        | jump    |
+| Varya  | 2020-09-21 | NULL       | jump    |
+| Iskra  | 2014-03-10 | NULL       | eat     |
+| Mitka  | 2016-09-22 | NULL       | eat     |
+| Snejka | 2013-10-14 | NULL       | jump    |
++--------+------------+------------+---------+
+10 rows in set (0,00 sec)
+
+mysql> SET FOREIGN_KEY_CHECKS=1;
+Query OK, 0 rows affected (0,00 sec)
+
+mysql> CREATE TABLE all_animals AS SELECT d.name,d.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM dog AS d LEFT JOIN
+pet AS hh1 ON d.class_id=hh1.id  LEFT JOIN command AS cc1 ON d.command=cc1.id UNION SELECT c.name,c.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM cat AS c LEFT JOIN pet AS hh1 ON c.class_id=hh1.id LEFT JOIN command AS cc1 ON c.command=cc1.id UNION SELECT h.name,h.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM hamster AS h LEFT JOIN pet AS hh1 ON h.class_id=hh1.id LEFT JOIN command AS cc1 ON h.command=cc1.id UNION SELECT h.name,h.bday,pp1.animal_class AS "table_name", cc1.command AS command FROM horse AS h LEFT JOIN pack_animal AS pp1 ON h.class_id=pp1.id LEFT JOIN command AS cc1 ON h.command=cc1.id UNION SELECT d.name,d.bday,pp1.animal_class AS "table_name", cc1.command AS command FROM donkey AS d LEFT JOIN pack_animal AS pp1 ON d.class_id=pp1.id LEFT JOIN command AS cc1 ON d.command=cc1.id;
+ERROR 1050 (42S01): Table 'all_animals' already exists
+mysql> drop table all_animals;
+Query OK, 0 rows affected (0,07 sec)
+
+mysql> CREATE TABLE all_animals AS SELECT d.name,d.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM dog AS d LEFT JOIN
+pet AS hh1 ON d.class_id=hh1.id  LEFT JOIN command AS cc1 ON d.command=cc1.id UNION SELECT c.name,c.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM cat AS c LEFT JOIN pet AS hh1 ON c.class_id=hh1.id LEFT JOIN command AS cc1 ON c.command=cc1.id UNION SELECT h.name,h.bday,hh1.animal_class AS "table_name", cc1.command AS command FROM hamster AS h LEFT JOIN pet AS hh1 ON h.class_id=hh1.id LEFT JOIN command AS cc1 ON h.command=cc1.id UNION SELECT h.name,h.bday,pp1.animal_class AS "table_name", cc1.command AS command FROM horse AS h LEFT JOIN pack_animal AS pp1 ON h.class_id=pp1.id LEFT JOIN command AS cc1 ON h.command=cc1.id UNION SELECT d.name,d.bday,pp1.animal_class AS "table_name", cc1.command AS command FROM donkey AS d LEFT JOIN pack_animal AS pp1 ON d.class_id=pp1.id LEFT JOIN command AS cc1 ON d.command=cc1.id;
+Query OK, 10 rows affected (0,03 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM all_animals;
++--------+------------+------------+---------+
+| name   | bday       | table_name | command |
++--------+------------+------------+---------+
+| Bobik  | 2020-05-19 | dog        | play    |
+| Misha  | 2019-01-12 | dog        | eat     |
+| Marsik | 2021-07-13 | dog        | jump    |
+| Vasya  | 2016-02-22 | dog        | sleep   |
+| Gena   | 2023-02-11 | dog        | sleep   |
+| Homa   | 2022-06-12 | dog        | jump    |
+| Varya  | 2020-09-21 | NULL       | jump    |
+| Iskra  | 2014-03-10 | NULL       | eat     |
+| Mitka  | 2016-09-22 | NULL       | eat     |
+| Snejka | 2013-10-14 | NULL       | jump    |
++--------+------------+------------+---------+
+10 rows in set (0,00 sec)
+
+mysql> select * from pack_animal;
++----+-----------+--------------+
+| id | animal_id | animal_class |
++----+-----------+--------------+
+|  1 |         2 | horse        |
+|  3 |         2 | donkey       |
++----+-----------+--------------+
+2 rows in set (0,00 sec)
+
+mysql> select * from pet;
++----+-----------+--------------+
+| id | animal_id | animal_class |
++----+-----------+--------------+
+|  1 |         1 | dog          |
+|  2 |         1 | cat          |
+|  3 |         1 | hamster      |
++----+-----------+--------------+
+3 rows in set (0,00 sec)
+
+mysql> select * from dog;
++----+----------+-------+------------+---------+
+| id | class_id | name  | bday       | command |
++----+----------+-------+------------+---------+
+|  1 |        1 | Bobik | 2020-05-19 |       1 |
+|  2 |        1 | Misha | 2019-01-12 |       2 |
++----+----------+-------+------------+---------+
+2 rows in set (0,00 sec)
+
+mysql> select * from cat;
++----+----------+--------+------------+---------+
+| id | class_id | name   | bday       | command |
++----+----------+--------+------------+---------+
+|  1 |        1 | Marsik | 2021-07-13 |       4 |
+|  2 |        1 | Vasya  | 2016-02-22 |       3 |
++----+----------+--------+------------+---------+
+2 rows in set (0,00 sec)
+
+mysql> select * from hamster;
++----+----------+------+------------+---------+
+| id | class_id | name | bday       | command |
++----+----------+------+------------+---------+
+|  1 |        1 | Gena | 2023-02-11 |       3 |
+|  2 |        1 | Homa | 2022-06-12 |       4 |
++----+----------+------+------------+---------+
+2 rows in set (0,00 sec)
+
+mysql> select * from horse;
++----+----------+-------+------------+---------+
+| id | class_id | name  | bday       | command |
++----+----------+-------+------------+---------+
+|  1 |        2 | Varya | 2020-09-21 |       4 |
+|  2 |        2 | Iskra | 2014-03-10 |       2 |
++----+----------+-------+------------+---------+
+2 rows in set (0,00 sec)
+
+mysql> select * from donkey;
++----+----------+--------+------------+---------+
+| id | class_id | name   | bday       | command |
++----+----------+--------+------------+---------+
+|  1 |        2 | Mitka  | 2016-09-22 |       2 |
+|  2 |        2 | Snejka | 2013-10-14 |       4 |
++----+----------+--------+------------+---------+
+2 rows in set (0,00 sec)
+
+mysql> 
